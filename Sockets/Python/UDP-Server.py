@@ -1,17 +1,12 @@
 from socket import *
 
-#porta do servidor UDP
 serverPort = 12000
-serverSocket = socket(AF_INET, SOCK_DGRAM)
-serverSocket.bind(('', serverPort))
-
-print("O servidor está pronto para receber")
+serverSocket = socket(AF_INET, SOCK_DGRAM) 
+serverSocket.bind(("", serverPort))
+print("The server is ready to receive")
 
 while True:
     message, clientAddress = serverSocket.recvfrom(2048)
+    print("Received message:", message , " from:", clientAddress[0], " port:", clientAddress[1])
     modifiedMessage = message.decode().upper()
-
-    #mostra a mensagem recebida
-    print("> ", message.decode() ,"      de ", clientAddress)
-
     serverSocket.sendto(modifiedMessage.encode(), clientAddress)
